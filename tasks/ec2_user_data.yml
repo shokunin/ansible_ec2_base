@@ -20,4 +20,4 @@
   command: /usr/sbin/update-rc.d anomali_bootstrap defaults 01
   args:
     chdir: /etc/init.d
-    creates: /etc/rc1.d/K01anomali_bootstrap
+    creates: /etc/rc2.d/S02anomali_bootstrap
