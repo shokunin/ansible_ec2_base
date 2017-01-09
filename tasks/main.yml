@@ -1,2 +1,4 @@
 ---
-# tasks file for shokunin.ansible_ec2_base
+
+- { include: ec2_user_data.yml, when: ansible_virtualization_type == "xen" }
+- include dotfiles.yml

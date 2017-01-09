@@ -1,0 +1,30 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:             anomaly_bootstrap
+# Required-Start:       $remote_fs $syslog
+# Required-Stop:        $remote_fs $syslog
+# Default-Start:        2 3 4 5
+# Default-Stop:
+# Short-Description:    Setup the hostname to role specs
+### END INIT INFO
+
+
+ROLE=`/usr/local/bin/get_user_data -p role`
+DOMAIN=`/usr/local/bin/get_user_data -p domain`
+INSTANCE_ID=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id |awk -F '-' '{print $NF}'`
+IP=`/sbin/ifconfig eth0 | /bin/grep Mask | /usr/bin/awk  -F':' '{print $2}' |/usr/bin/awk '{print $1}'`
+
+if [ "X${DOMAIN}" == "X" ]; then
+  DOMAIN="local"
+fi
+
+if [ $(grep -c $IP /etc/hosts) -ne 0 ] ; then
+  X="y"
+else
+  echo "${IP} ${ROLE}-${INSTANCE_ID} ${ROLE}-${INSTANCE_ID}.${DOMAIN}" >> /etc/hosts
+fi
+
+echo "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /etc/hostname
+hostname "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /dev/null
+

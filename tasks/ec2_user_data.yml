@@ -1,0 +1,23 @@
+---
+
+- name: install get_user_data script
+  copy:
+    src=get_user_data
+    dest=/usr/local/bin/get_user_data
+    owner=root
+    group=root
+    mode=0755
+
+- name: install anomali bootstrap
+  copy:
+    src=anomali_bootstrap
+    dest=/etc/init.d/anomali_bootstrap
+    owner=root
+    group=root
+    mode=0755
+
+- name: enable anomali bootstrap
+  command: /usr/sbin/update-rc.d anomali_bootstrap defaults 01
+  args:
+    chdir: /etc/init.d
+    creates: /etc/rc1.d/K01anomali_bootstrap
