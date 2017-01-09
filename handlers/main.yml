@@ -1,2 +1,5 @@
 ---
 # handlers file for shokunin.ansible_ec2_base
+#
+- name: set_hostname
+  command: /etc/init.d/ec2_bootstrap
