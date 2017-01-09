@@ -8,16 +8,16 @@
     group=root
     mode=0755
 
-- name: install anomali bootstrap
+- name: install ec2 bootstrap
   copy:
-    src=anomali_bootstrap
-    dest=/etc/init.d/anomali_bootstrap
+    src=ec2_bootstrap
+    dest=/etc/init.d/ec2_bootstrap
     owner=root
     group=root
     mode=0755
 
-- name: enable anomali bootstrap
-  command: /usr/sbin/update-rc.d anomali_bootstrap defaults 01
+- name: enable ec2 bootstrap
+  command: /usr/sbin/update-rc.d ec2_bootstrap defaults 01
   args:
     chdir: /etc/init.d
-    creates: /etc/rc2.d/S02anomali_bootstrap
+    creates: /etc/rc2.d/S02ec2_bootstrap
