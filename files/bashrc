@@ -1,0 +1,12 @@
+# Set a viable prompt
+export PS1="\[\e[1;91m\]\[\e[37m\](\u@\H)\[\e[m\]:\[\e[33m\]\w\[\e[m\]\n$ "
+
+export EDITOR=vi
+
+export PATH="${HOME}/bin:${PATH}"
+
+##### Aliases
+# for a more civilzed mode
+alias k="set -o vi"
+alias ll="ls -al"
+alias ctc='cd ${PWD} && clear'

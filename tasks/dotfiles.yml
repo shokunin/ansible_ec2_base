@@ -1,2 +1,11 @@
 ---
 # Install dotfiles
+
+- name: install ubuntu bashrc
+  copy:
+    src=bashrc
+    dest=/home/ubuntu/.bashrc
+    owner=ubuntu
+    group=ubuntu
+    mode=0644
+
