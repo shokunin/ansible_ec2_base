@@ -2,24 +2,9 @@
 
 - name: install get_user_data script
   copy:
-    src=get_user_data
-    dest=/usr/local/bin/get_user_data
-    owner=root
-    group=root
-    mode=0755
+    src: get_user_data
+    dest: /usr/local/bin/get_user_data
+    owner: root
+    group: root
+    mode: 0755
 
-- name: install ec2 bootstrap
-  copy:
-    src=ec2_bootstrap
-    dest=/etc/init.d/ec2_bootstrap
-    owner=root
-    group=root
-    mode=0755
-  notify:
-    - set_hostname
-
-- name: enable ec2 bootstrap
-  command: /usr/sbin/update-rc.d ec2_bootstrap defaults 01
-  args:
-    chdir: /etc/init.d
-    creates: /etc/rc2.d/S02ec2_bootstrap

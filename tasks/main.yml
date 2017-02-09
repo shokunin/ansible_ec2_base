@@ -1,3 +1,36 @@
 ---
+
+- name: Admin Group
+  user:
+    name: admin
+    state: present
+
+- name: Admin User
+  user:
+    name: admin
+    uid: 888
+    group: admin
+    comment: "Admin User"
+    shell: /bin/bash
+    state: present
+
+- name: Admin User SSH Dir
+  file:
+    path: /home/admin/.ssh
+    mode: 0700
+    owner: admin
+    group: admin
+    state: directory
+
+- name: setup sudo access for the admin user
+  copy:
+    dest: /etc/sudoers.d/80-admin-users
+    src: admin-sudoers
+    owner: root
+    group: root
+    mode: 0440
+
 - { include: ec2_user_data.yml, when: ansible_virtualization_type == "xen" }
+- { include: ubuntu.yml, when: ansible_os_family == "Debian" }
+- { include: centos.yml, when: ansible_distribution == "CentOS" }
 - include: dotfiles.yml

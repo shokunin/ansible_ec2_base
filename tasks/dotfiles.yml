@@ -1,11 +1,11 @@
 ---
 # Install dotfiles
 
-- name: install ubuntu bashrc
+- name: install admin bashrc
   copy:
     src=bashrc
-    dest=/home/ubuntu/.bashrc
-    owner=ubuntu
-    group=ubuntu
+    dest=/home/admin/.bashrc
+    owner=admin
+    group=admin
     mode=0644
 

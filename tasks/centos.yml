@@ -1,0 +1,10 @@
+---
+
+- name: install centos configurator
+  copy:
+    src: centos_bootstrap
+    dest: /etc/rc.d/rc.local
+    owner: root
+    group: root
+    mode: 0755
+

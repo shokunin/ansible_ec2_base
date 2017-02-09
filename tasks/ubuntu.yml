@@ -1,0 +1,39 @@
+---
+
+- name: install admin_user bootstrap
+  copy:
+    src: admin_user_bootstrap
+    dest: /etc/init.d/admin_user_bootstrap
+    owner: root
+    group: root
+    mode: 0755
+
+- name: enable admin_user bootstrap
+  command: /usr/sbin/update-rc.d admin_user_bootstrap defaults 01
+  args:
+    chdir: /etc/init.d
+    creates: /etc/rc2.d/S02admin_user_bootstrap
+
+- name: setup sudo access for the admin user
+  copy:
+    dest: /etc/sudoers.d/80-admin-users
+    src: admin-sudoers
+    owner: root
+    group: root
+    mode: 0440
+
+- name: install ec2 bootstrap
+  copy:
+    src=ec2_bootstrap
+    dest=/etc/init.d/ec2_bootstrap
+    owner=root
+    group=root
+    mode=0755
+  notify:
+    - set_hostname
+
+- name: enable ec2 bootstrap
+  command: /usr/sbin/update-rc.d ec2_bootstrap defaults 01
+  args:
+    chdir: /etc/init.d
+    creates: /etc/rc2.d/S02ec2_bootstrap

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+touch /var/lock/subsys/local
+
+ROLE=`/usr/local/bin/get_user_data -p role`
+DOMAIN=`/usr/local/bin/get_user_data -p domain`
+INSTANCE_ID=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id |awk -F '-' '{print $NF}'`
+IP=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/local-ipv4`
+
+if [ "X${ROLE}" != "X" ]; then
+
+  if [ "X${DOMAIN}" == "X" ]; then
+    DOMAIN="local"
+  fi
+  
+  if [ $(grep -c $IP /etc/hosts) -ne 0 ] ; then
+    X="y"
+  else
+    echo "${IP} ${ROLE}-${INSTANCE_ID} ${ROLE}-${INSTANCE_ID}.${DOMAIN}" >> /etc/hosts
+  fi
+  
+  echo "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /etc/hostname
+  hostname "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /dev/null
+
+fi
+
+SSH_KEY=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/public-keys/0/openssh-key`
+
+if [ "X${SSH_KEY}" != "X" ]; then
+	echo $SSH_KEY > /home/admin/.ssh/authorized_keys
+	chmod 0600 /home/admin/.ssh/authorized_keys
+	chown -R admin:admin /home/admin/.ssh/
+fi
+
