@@ -1,7 +1,5 @@
 #!/bin/bash
 
-touch /var/lock/subsys/local
-
 ROLE=`/usr/local/bin/get_user_data -p role`
 DOMAIN=`/usr/local/bin/get_user_data -p domain`
 INSTANCE_ID=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id |awk -F '-' '{print $NF}'`
