@@ -3,9 +3,9 @@
 
 - name: install admin bashrc
   copy:
-    src=bashrc
-    dest=/home/admin/.bashrc
-    owner=admin
-    group=admin
-    mode=0644
+    src: bashrc
+    dest: /home/admin/.bashrc
+    owner: admin
+    group: admin
+    mode: 0644
 
