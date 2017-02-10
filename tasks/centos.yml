@@ -8,3 +8,8 @@
     group: root
     mode: 0755
 
+- name: we have security groups so iptables is not needed
+  systemd: 
+    name: firewalld
+    enabled: no
+    state: stopped
