@@ -10,15 +10,23 @@ if [ "X${ROLE}" != "X" ]; then
   if [ "X${DOMAIN}" == "X" ]; then
     DOMAIN="local"
   fi
-  
+
   if [ $(grep -c $IP /etc/hosts) -ne 0 ] ; then
     X="y"
   else
     echo "${IP} ${ROLE}-${INSTANCE_ID} ${ROLE}-${INSTANCE_ID}.${DOMAIN}" >> /etc/hosts
   fi
-  
+
+  if [ $(grep -c $HOSTNAME /etc/sysconfig/network) -ne 0 ] ; then
+    X="y"
+  else
+	  echo "HOSTNAME=${ROLE}-${INSTANCE_ID}.${DOMAIN}" >> /etc/sysconfig/network
+  fi
+
   echo "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /etc/hostname
-  hostname "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /dev/null
+
+  # Centos Fix
+  hostnamectl set-hostname "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /dev/null
 
 fi
 
@@ -29,4 +37,3 @@ if [ "X${SSH_KEY}" != "X" ]; then
 	chmod 0600 /home/admin/.ssh/authorized_keys
 	chown -R admin:admin /home/admin/.ssh/
 fi
-
