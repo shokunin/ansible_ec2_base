@@ -7,6 +7,8 @@
     owner: root
     group: root
     mode: 0755
+  notify:
+    - set_admin
 
 - name: enable admin_user bootstrap
   command: /usr/sbin/update-rc.d admin_user_bootstrap defaults 01
