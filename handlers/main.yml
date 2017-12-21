@@ -6,4 +6,4 @@
   command: /etc/init.d/ec2_bootstrap
 
 - name: set_admin
-  command: /etc/init.d/ec2_bootstrap
+  command: /etc/init.d/admin_user_bootstrap
