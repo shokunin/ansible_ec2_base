@@ -31,3 +31,29 @@
   args:
     chdir: /etc/init.d
     creates: /etc/rc2.d/S02ec2_bootstrap
+
+- name: disable IPv6 via gai.conf
+  copy:
+    src: gai.conf
+    dest: /etc/gai.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: hard disable ipv6 as a service (1)
+  copy:
+    src: disable-ipv6.service
+    dest: /lib/systemd/system/disable-ipv6.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: hard disable ipv6 as a service (2)
+  file:
+    dest: /lib/systemd/system/disable-ipv6.service
+    src: /etc/systemd/system/multi-user.target.wants/disable-ipv6.service
+    state: link
+
+- name: kick systemd
+  command: "/bin/systemctl daemon-reload"
+
