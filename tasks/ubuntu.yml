@@ -50,8 +50,8 @@
 
 - name: hard disable ipv6 as a service (2)
   file:
-    dest: /lib/systemd/system/disable-ipv6.service
-    src: /etc/systemd/system/multi-user.target.wants/disable-ipv6.service
+    src: /lib/systemd/system/disable-ipv6.service
+    dest: /etc/systemd/system/multi-user.target.wants/disable-ipv6.service
     state: link
 
 - name: kick systemd
