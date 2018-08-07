@@ -31,3 +31,8 @@ if [ "X${ROLE}" != "X" ]; then
   hostname "${ROLE}-${INSTANCE_ID}.${DOMAIN}" > /dev/null
 
 fi
+
+# Handle the case where resolv.conf is not being properly parsed
+if [ $(grep -c "[a-z]032node" /etc/resolv.conf) -gt 0 ]; then
+  sed -i s/032node/\ node/g /etc/resolv.conf
+fi
