@@ -1,0 +1,6 @@
+consul_fix_setup_add() {
+	/usr/bin/logger "Fixing consul search resolv.conf"
+	/bin/sed -i  's/032node/ node/g' /etc/resolv.conf
+}
+
+consul_fix_setup_add

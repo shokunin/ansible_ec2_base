@@ -57,3 +57,11 @@
 - name: kick systemd
   command: "/bin/systemctl daemon-reload"
 
+
+- name: fix dhcp generation of resolv.conf
+  file:
+    src: consul-fix-dhclient
+    dest: /etc/dhcp/dhclient-exit-hooks.d/consul-fix
+    owner: root
+    group: root
+    mode: 0755
